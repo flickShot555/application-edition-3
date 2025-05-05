@@ -1,0 +1,301 @@
+\section{Functional Requirements}
+
+The Fake AI Voice Detection App is designed to empower users by offering real-time monitoring and analysis of voice calls, specifically targeting conversations in the Urdu language. It enables users to initiate voice monitoring during calls, where an intelligent machine learning model continuously evaluates the speech to detect AI-generated or synthetic voices. Upon identifying a potential fake voice, the app promptly alerts the user with a clear notification, enhancing their ability to respond appropriately. The app also logs all detection results, allows users to review and provide feedback, and ensures all data is securely stored. With features like Urdu language filtering, pause/resume functionality, and encrypted storage, the app prioritizes accuracy, transparency, and user control in a secure and privacy-respecting environment.
+\vspace{8mm}
+\subsection{ Functional Requirements X}
+
+This section describes the functional requirements of the Urdu Fake Voice Detection system.
+\subsection{Upload or Record Audio for Detection}
+\begin{table}[H]
+\centering
+\caption{Upload or Record Audio for Detection}
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Identifier} & FR-1 \\ \hline
+\textbf{Title} & Upload or Record Audio for Detection \\ \hline
+\textbf{Requirement} & The user shall be able to either upload an Urdu audio file or record live audio through the mobile app interface for fake voice detection. \\ \hline
+\textbf{Source} & Project Requirement Specification Document / End User Feedback \\ \hline
+\textbf{Rationale} & Users need to provide voice input for the system to analyze and classify it as real or fake. \\ \hline
+\textbf{Business Rule} & Only .wav and .mp3 formats are allowed; recording length: 3--10 seconds. \\ \hline
+\textbf{Dependencies} & FR-2, FR-3 \\ \hline
+\textbf{Priority} & High \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Audio Preprocessing and Feature Extraction}
+\begin{table}[H]
+\centering
+\caption{Audio Preprocessing and Feature Extraction}
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Identifier} & FR-2 \\ \hline
+\textbf{Title} & Audio Preprocessing and Feature Extraction \\ \hline
+\textbf{Requirement} & Upon receiving audio input, the system shall preprocess and extract features such as MFCCs and pitch for classification. \\ \hline
+\textbf{Source} & System Design / ML Pipeline Documentation \\ \hline
+\textbf{Rationale} & Feature extraction is critical for transforming raw audio into usable input for the model. \\ \hline
+\textbf{Business Rule} & Silence and noise will be removed before feature extraction. \\ \hline
+\textbf{Dependencies} & FR-1, FR-4 \\ \hline
+\textbf{Priority} & High \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Train and Save Classification Model}
+\begin{table}[H]
+\centering
+\caption{Train and Save Classification Model}
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Identifier} & FR-3 \\ \hline
+\textbf{Title} & Train and Save Classification Model \\ \hline
+\textbf{Requirement} & The system shall train a transformer-based model on labeled Urdu voice data and save it for runtime classification. \\ \hline
+\textbf{Source} & Developer Implementation Plan / ML Design \\ \hline
+\textbf{Rationale} & The model is the core component used to differentiate between real and fake voices. \\ \hline
+\textbf{Business Rule} & Training must be done offline; only the trained model will be used in the app. \\ \hline
+\textbf{Dependencies} & FR-2 \\ \hline
+\textbf{Priority} & Medium \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Classify Audio Using Pretrained Model}
+\begin{table}[H]
+\centering
+\caption{Classify Audio Using Pretrained Model}
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Identifier} & FR-4 \\ \hline
+\textbf{Title} & Classify Audio Using Pretrained Model \\ \hline
+\textbf{Requirement} & The system shall classify the extracted features using the saved model and output either "Real Voice" or "Fake Voice". \\ \hline
+\textbf{Source} & ML Model Integration Document / Backend API Design \\ \hline
+\textbf{Rationale} & This function allows the app to provide decision-making capability based on learned data. \\ \hline
+\textbf{Business Rule} & The classification must complete within 5 seconds. \\ \hline
+\textbf{Dependencies} & FR-2, FR-3 \\ \hline
+\textbf{Priority} & High \\ \hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Send Audio and Receive Result via API }
+
+\begin{table}[H]
+\centering
+\caption{Send Audio and Receive Result via API }
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Identifier} & FR-5 \\ \hline
+\textbf{Title} & Send Audio and Receive Result via API \\ \hline
+\textbf{Requirement} & The mobile frontend shall send audio to the backend API, and the backend shall return the classification result. \\ \hline
+\textbf{Source} & System Architecture / REST API Design \\ \hline
+\textbf{Rationale} & API communication is essential for decoupling the frontend from the backend processing. \\ \hline
+\textbf{Business Rule} & API must be secured using HTTPS and accept authenticated requests only. \\ \hline
+\textbf{Dependencies} & FR-1, FR-4 \\ \hline
+\textbf{Priority} & High \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\subsection{Display Detection Result}
+
+\begin{table}[H]
+\centering
+\caption{Display Detection Result}
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Identifier} & FR-6 \\ \hline
+\textbf{Title} & Display Detection Result \\ \hline
+\textbf{Requirement} & The app shall display the classification result to the user in an understandable format like "Real Voice" or "Fake Voice". \\ \hline
+\textbf{Source} & UI/UX Design / User Stories \\ \hline
+\textbf{Rationale} & Users need clear and immediate feedback on the authenticity of their voice input. \\ \hline
+\textbf{Business Rule} & The result must appear within 2 seconds of receiving the API response. \\ \hline
+\textbf{Dependencies} & FR-5 \\ \hline
+\textbf{Priority} & High \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\subsection{Connect Frontend with Backend }
+
+\begin{table}[H]
+\centering
+\caption{Connect Frontend with Backend }
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Identifier} & FR-7 \\ \hline
+\textbf{Title} & Connect Frontend with Backend \\ \hline
+\textbf{Requirement} & The system shall ensure the mobile frontend is integrated with backend APIs for seamless audio submission and result retrieval. \\ \hline
+\textbf{Source} & Integration Plan / Deployment Checklist \\ \hline
+\textbf{Rationale} & Ensures the whole application functions as a complete unit. \\ \hline
+\textbf{Business Rule} & Integration must be tested on both Android and iOS platforms. \\ \hline
+\textbf{Dependencies} & FR-5 \\ \hline
+\textbf{Priority} & Medium \\ \hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Collect User Feedback on Detection}
+
+\begin{table}[H]
+\centering
+\caption{Collect User Feedback on Detection}
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Identifier} & FR-8 \\ \hline
+\textbf{Title} & Collect User Feedback on Detection \\ \hline
+\textbf{Requirement} & The app shall allow users to provide optional feedback on the accuracy of the voice classification result. \\ \hline
+\textbf{Source} & User Experience Design Document \\ \hline
+\textbf{Rationale} & Gathering feedback helps improve the system and understand user satisfaction. \\ \hline
+\textbf{Business Rule} & Feedback form is optional and appears after each detection. \\ \hline
+\textbf{Dependencies} & FR-6 \\ \hline
+\textbf{Priority} & Low \\ \hline
+\end{tabular}
+\end{table}
+
+
+\section{Non-Functional Requirements}
+
+ \vspace{6mm}
+\subsection{Reliability}
+\vspace{3mm}
+\textbf{RELI-1:} The app shall have a Mean Time Between Failures (MTBF) of at least 500 hours of continuous operation under normal usage conditions, ensuring reliability and stability during typical usage.
+
+\textbf{RELI-2:} In the event of a software failure, the app shall notify the user with a clear error message within 5 seconds and provide steps to correct or report the issue.
+
+\textbf{RELI-3:} The system shall log all failures automatically, with logs accessible for diagnostic purposes, allowing the development team to investigate and address recurring issues.
+
+\textbf{RELI-4:} The app shall perform regular system health checks to ensure the software’s performance and identify potential issues before they affect users.
+
+\vspace{8mm}
+\subsection{Usability}
+\vspace{3mm}
+\textbf{USE-1:} The app shall allow users to upload and analyze a voice sample with no more than three steps (e.g., select file, upload, view result).
+
+\textbf{USE-2:} The app shall provide clear instructions and user-friendly error messages to assist users in navigating the app without confusion, ensuring a smooth experience even for first-time users.
+
+\textbf{USE-3:} The app’s user interface shall be designed to meet accessibility standards (e.g., WCAG 2.1), ensuring it can be easily used by people with disabilities, such as those relying on screen readers.
+
+\textbf{USE-4:} The app shall provide an in-app tutorial or help guide explaining its main features, making the system easy to learn and use, especially for novice users.
+
+\textbf{USE-5:} The app shall include a feedback mechanism allowing users to report issues or suggest improvements directly within the app.
+\vspace{8mm}
+\subsection{Performance}
+\vspace{3mm}
+\textbf{PERF-1:} The app shall process and return results for 95\% of voice recordings within 10 seconds from the moment a user submits the file.
+
+\textbf{PERF-2:} During peak usage, the app shall support up to 500 concurrent users performing voice analysis without experiencing significant performance degradation, keeping response times under 10 seconds.
+
+\textbf{PERF-3:} The backend system shall be capable of processing at least 100 samples per minute without failure or slowdowns, ensuring efficient handling of high submission volumes.
+
+\textbf{PERF-4:} The app shall optimize resource usage to minimize energy consumption and improve battery life during extended use, especially on mobile devices.
+\vspace{8mm}
+\subsection{Security}
+\vspace{3mm}
+\textbf{SEC-1:} All user data, including voice recordings, shall be encrypted using industry-standard encryption methods to ensure the privacy and confidentiality of sensitive information.
+
+\textbf{SEC-2:} The app shall implement intrusion detection and alert the admin immediately if unauthorized access attempts are detected, including potential breaches of user data.
+
+\textbf{SEC-3:} The app shall require secure login and implement a lockout mechanism, temporarily locking user accounts after three failed login attempts to prevent unauthorized access.
+
+\textbf{SEC-4:} The app shall comply with relevant privacy regulations (e.g., GDPR, CCPA) to ensure responsible and secure handling of user data, including providing users with the ability to request data deletion.
+
+\textbf{SEC-5:} The app shall perform regular security audits and vulnerability assessments to identify and mitigate potential risks and security threats.
+
+\vspace{8mm}
+\section{ External Interface Requirements}
+\vspace{3mm}
+This section outlines how the system interacts with external components such as users, hardware, software systems, and communication protocols. These specifications ensure that the mobile application can operate effectively within its environment and can communicate securely and reliably with necessary systems.
+\vspace{8mm}
+\subsubsection{3.5.1 User Interface Requirements}
+\vspace{3mm}
+The Urdu Fake Voice Detection mobile application will meet the following user interface requirements:
+
+\begin{itemize}
+    \item The interface shall be clean, responsive, and localized for Urdu-speaking users.
+    \item Urdu will be the primary language, with all text (messages, buttons, labels) displayed in simple, readable Urdu.
+    \item Appropriate Urdu fonts, culturally familiar icons, and right-to-left layout standards will be used.
+    \item The main screen shall include standard controls such as:
+    \begin{itemize}
+        \item Record button
+        \item Upload button
+        \item Submit button
+    \end{itemize}
+    \item A consistent color scheme shall be used to indicate system states (e.g., success, error, warning).
+    \item Audio feedback and accessibility features will be included to support visually impaired users.
+    \item The interface shall support localization to allow future addition of other languages.
+\end{itemize}
+
+\vspace{8mm}
+\subsubsection{3.5.2 Software Interface Requirements}
+\vspace{3mm}
+\textbf{SI-1: Backend Server:} The mobile application shall communicate with a backend server hosted in a cloud or local environment via RESTful APIs.  
+
+\textbf{SI-1.2:} The application shall transmit audio data in standard formats such as \texttt{.wav} or \texttt{.mp3} to the backend for processing.  
+
+\textbf{SI-1.3:} The backend server shall respond with JSON-formatted output containing voice prediction results and confidence scores.  
+Example response:
+\begin{verbatim}
+{
+    "result": "Real",
+    "confidence": 92.4
+}
+\end{verbatim}
+
+\textbf{SI-1.4:} The backend server shall utilize Python-based libraries including but not limited to:
+\begin{itemize}
+    \item \texttt{scikit-learn} : for model management and machine learning utilities.
+    \item \texttt{transformers} : for Wav2Vec2.0 Transformer model inference.
+    \item \texttt{librosa} : for audio preprocessing and feature extraction.
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{SI-2: Mobile Development Frameworks}  
+\textbf{SI-2.1:} The mobile client shall be developed using cross-platform frameworks such as \texttt{React Native} or \texttt{Flutter}, or native SDKs (e.g., \texttt{Android SDK}) depending on the target platform.
+
+\vspace{0.5em}
+\textbf{SI-3: API Documentation and Versioning}  
+\textbf{SI-3.1:} All API endpoints shall be fully documented with details on input/output formats, expected status codes, and usage examples.  
+
+\textbf{SI-3.2:} The system shall implement API versioning (e.g., \texttt{/api/v1/}) to ensure backward compatibility and support future changes.
+\vspace{8mm}
+\subsubsection{3.5.3 Hardware Interface Requirements}
+\vspace{3mm}
+\textbf{HI-1: Minimum Device Specifications}  
+The mobile application shall require devices to meet the following minimum hardware specifications:
+
+\begin{itemize}
+    \item \textbf{HI-1.1: Operating System} : Android 8.0 (Oreo) or higher, iOS 12 or higher.
+    \item \textbf{HI-1.2: Processor} : ARM-based processor with a minimum clock speed of 1.4 GHz.
+    \item \textbf{HI-1.3: RAM} : At least 2 GB of memory.
+    \item \textbf{HI-1.4: Storage} : Minimum of 50 MB of free space for application installation and caching.
+    \item \textbf{HI-1.5: Microphone} : Functional internal or external microphone for capturing user audio.
+    \item \textbf{HI-1.6: Internet} : Active network connection (Wi-Fi or mobile data) for communicating with the backend server.
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{HI-2: Runtime Permissions}  
+\textbf{HI-2.1:} The application shall request runtime permissions to access the device’s microphone and local storage.  
+
+\textbf{HI-2.2:} If any required permission is denied, the application shall notify the user and guide them to manually enable the necessary access through system settings.
+
+\vspace{8mm}
+\subsubsection{3.5.4 Communication Interface Requirements}
+\vspace{3mm}
+\textbf{CI-1: Communication Protocol:} The mobile application shall communicate with the backend server using encrypted HTTP requests over the \texttt{HTTPS} protocol to ensure secure data transmission.
+
+\vspace{0.5em}
+\textbf{CI-2: Data Transmission:} Audio files shall be transmitted using \texttt{POST} requests with the \texttt{multipart/form-data} content type.The mobile application shall interpret HTTP status codes and display appropriate feedback messages in Urdu to inform the user of the request outcome (e.g., \texttt{200 OK} for success, \texttt{400 Bad Request} for input errors).
+
+\vspace{0.5em}
+\textbf{CI-3: Network Robustness:} The application shall implement retry mechanisms and timeout handling to manage communication over unstable internet connections.  
+
+\vspace{0.5em}
+\textbf{CI-4: Device Communication Scope:} No peer-to-peer or third-party device communication technologies (such as Bluetooth or NFC) shall be required at this stage of development.
+
+\vspace{0.5em}
+\textbf{CI-5: Compliance and Privacy:} All communication between the client and server shall comply with relevant data protection and privacy standards to ensure user-submitted audio data remains secure.
+
+
+
+
+
+\section{Chapter Summary}
